@@ -12,9 +12,10 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Contraseña', type: 'password' },
       },
       async authorize(credentials) {
+        if (!credentials) return null;
         if (
-          credentials?.email    === process.env.ADMIN_EMAIL &&
-          credentials?.password === process.env.ADMIN_PASSWORD
+          credentials.email    === process.env.ADMIN_EMAIL &&
+          credentials.password === process.env.ADMIN_PASSWORD
         ) {
           return { id: '1', email: credentials.email, name: 'Admin' };
         }

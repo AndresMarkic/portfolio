@@ -1,0 +1,97 @@
+[
+  {
+    "id": "remitax",
+    "nombre": "RemiTax.APP",
+    "descripcion": "Plataforma completa de gestión de flotas de taxis y remises. App conductor + pasajero con GPS real, navegación turn-by-turn, liquidaciones automáticas y panel admin en tiempo real.",
+    "emoji": "🚕",
+    "url": "https://remitax.app",
+    "github": "https://github.com/elfarodigitalweb/remitax-app",
+    "tags": [
+      "Next.js",
+      "Socket.IO",
+      "Capacitor",
+      "Mapbox",
+      "Prisma"
+    ],
+    "status": "live",
+    "featured": true,
+    "orden": 1,
+    "imagen": "",
+    "imagenes": [],
+    "createdAt": "2026-01-01"
+  },
+  {
+    "id": "saas-dashboard",
+    "nombre": "Metricly — SaaS Dashboard",
+    "descripcion": "Dashboard analítico para SaaS con métricas en tiempo real, gráficos interactivos, gestión de usuarios y reportes exportables.",
+    "emoji": "📊",
+    "url": "",
+    "github": "",
+    "tags": [
+      "Next.js",
+      "TypeScript",
+      "Recharts",
+      "Tailwind"
+    ],
+    "status": "dev",
+    "featured": false,
+    "orden": 2,
+    "imagen": "",
+    "imagenes": [],
+    "createdAt": "2026-01-01"
+  },
+  {
+    "id": "saas-landing",
+    "nombre": "Nexus — Landing SaaS",
+    "descripcion": "Landing page profesional para producto SaaS con animaciones, sección de precios, testimonios y formulario de captura de leads.",
+    "emoji": "🚀",
+    "url": "",
+    "github": "",
+    "tags": [
+      "Next.js",
+      "Tailwind",
+      "Framer Motion"
+    ],
+    "status": "dev",
+    "featured": false,
+    "orden": 3,
+    "imagen": "",
+    "imagenes": [],
+    "createdAt": "2026-01-01"
+  },
+  {
+    "id": "task-manager",
+    "nombre": "Task Manager",
+    "descripcion": "Gestor de tareas colaborativo con autenticación, tableros Kanban, prioridades, fechas límite y notificaciones en tiempo real.",
+    "emoji": "✅",
+    "url": "",
+    "github": "",
+    "tags": [
+      "Next.js",
+      "Prisma",
+      "NextAuth",
+      "SQLite"
+    ],
+    "status": "dev",
+    "featured": false,
+    "orden": 4,
+    "imagen": "",
+    "imagenes": [],
+    "createdAt": "2026-01-01"
+  },
+  {
+    "id": "1779146041621",
+    "nombre": "eclatbeauty",
+    "descripcion": "market place de productos de bellesa y demas ",
+    "emoji": "🌐",
+    "url": "",
+    "github": "",
+    "tags": [],
+    "status": "dev",
+    "featured": false,
+    "orden": 5,
+    "createdAt": "2026-05-18",
+    "imagen": "",
+    "imagenes": []
+  }
+]

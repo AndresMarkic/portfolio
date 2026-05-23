@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Andres Markic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0A0E17;
+      --surface: #111827;
+      --card:    #161D2E;
+      --border:  rgba(255,255,255,0.07);
+      --text1:   #F1F5F9;
+      --text2:   #94A3B8;
+      --text3:   #475569;
+      --accent:  #6366F1;
+      --accent2: #8B5CF6;
+      --green:   #10B981;
+      --amber:   #F59E0B;
+      --red:     #EF4444;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text1);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.4); border-radius: 2px; }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,14,23,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 24px;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 18px;
+      background: linear-gradient(135deg, #6366F1, #8B5CF6);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a {
+      color: var(--text2); font-size: 14px; font-weight: 500;
+      text-decoration: none; transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text1); }
+    .btn-contact {
+      padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      background: var(--accent); color: white; text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .btn-contact:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding-top: 60px;
+    }
+    .hero-glow {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); pointer-events: none;
+    }
+    .glow-1 { width: 600px; height: 600px; top: -100px; left: -200px; background: rgba(99,102,241,0.12); }
+    .glow-2 { width: 400px; height: 400px; bottom: 0; right: -100px; background: rgba(139,92,246,0.08); }
+
+    .hero-content { position: relative; max-width: 720px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 24px;
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.25);
+      font-size: 12px; font-weight: 600; color: #818CF8;
+      letter-spacing: 0.06em;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #818CF8; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A78BFA 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 18px; color: var(--text2); line-height: 1.7;
+      margin-bottom: 36px; max-width: 540px;
+    }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px; border-radius: 10px;
+      background: var(--accent); color: white;
+      font-size: 15px; font-weight: 700; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px; border-radius: 10px;
+      border: 1px solid var(--border); color: var(--text2);
+      font-size: 15px; font-weight: 600; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); color: white; }
+
+    /* ── STATS ── */
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      margin-top: 80px; border-radius: 16px; overflow: hidden;
+    }
+    .stat {
+      background: var(--card);
+      padding: 28px; text-align: center;
+    }
+    .stat-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 36px; font-weight: 800;
+      background: linear-gradient(135deg, #6366F1, #A78BFA);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 13px; color: var(--text3); margin-top: 4px; font-weight: 500; }
+
+    /* ── SECTION ── */
+    section { padding: 80px 0; }
+    .section-label {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      letter-spacing: 0.14em; margin-bottom: 12px; display: block;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .section-sub { font-size: 16px; color: var(--text2); margin-bottom: 48px; }
+
+    /* ── PROJECTS GRID ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.25s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex; flex-direction: column;
+    }
+    .project-card:hover {
+      border-color: rgba(99,102,241,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(99,102,241,0.12);
+    }
+
+    .project-preview {
+      width: 100%; aspect-ratio: 16/9;
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #111827, #1E293B);
+    }
+    .project-preview img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .project-card:hover .project-preview img { transform: scale(1.04); }
+    .project-preview-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px;
+      background: linear-gradient(135deg, #0F172A, #1E293B);
+    }
+
+    .project-info { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .project-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .tag {
+      padding: 3px 9px; border-radius: 6px; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .tag-blue   { background: rgba(99,102,241,0.15);  color: #818CF8; }
+    .tag-green  { background: rgba(16,185,129,0.12);  color: #34D399; }
+    .tag-amber  { background: rgba(245,158,11,0.12);  color: #FCD34D; }
+    .tag-red    { background: rgba(239,68,68,0.12);   color: #FCA5A5; }
+    .tag-purple { background: rgba(139,92,246,0.12);  color: #C4B5FD; }
+    .tag-pink   { background: rgba(236,72,153,0.12);  color: #F9A8D4; }
+
+    .project-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .project-desc  { font-size: 13px; color: var(--text2); line-height: 1.6; flex: 1; }
+
+    .project-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 14px; margin-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .project-status {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600;
+    }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .status-live   .status-dot { background: var(--green); box-shadow: 0 0 8px rgba(16,185,129,0.6); }
+    .status-dev    .status-dot { background: var(--amber); }
+    .status-live   span { color: var(--green); }
+    .status-dev    span { color: var(--amber); }
+
+    .project-links { display: flex; gap: 8px; }
+    .project-link {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: var(--text2); text-decoration: none; font-size: 14px;
+      transition: all 0.15s;
+    }
+    .project-link:hover { background: rgba(99,102,241,0.15); color: #818CF8; border-color: rgba(99,102,241,0.3); }
+
+    /* ── ADD PROJECT CARD ── */
+    .card-add {
+      background: transparent;
+      border: 2px dashed rgba(99,102,241,0.2);
+      border-radius: 20px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 280px; gap: 12px;
+      cursor: pointer; transition: all 0.2s;
+      text-decoration: none;
+    }
+    .card-add:hover { border-color: rgba(99,102,241,0.5); background: rgba(99,102,241,0.04); }
+    .card-add-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .card-add p { font-size: 14px; font-weight: 600; color: var(--text2); }
+    .card-add span { font-size: 12px; color: var(--text3); }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px;
+      display: flex; align-items: center; gap: 14px;
+      transition: all 0.2s;
+    }
+    .skill-card:hover { border-color: rgba(99,102,241,0.3); transform: translateX(3px); }
+    .skill-icon {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .skill-name { font-size: 14px; font-weight: 600; }
+    .skill-level { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(139,92,246,0.06) 100%);
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 24px; padding: 56px;
+      text-align: center;
+    }
+    .contact-box h2 { font-family:'Syne',sans-serif; font-size: 36px; font-weight:800; margin-bottom:12px; }
+    .contact-box p  { color: var(--text2); font-size:16px; margin-bottom:28px; max-width:480px; margin-left:auto; margin-right:auto; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    footer p { font-size: 13px; color: var(--text3); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 13px; color: var(--text3); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--text1); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .stats { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .contact-box { padding: 32px 20px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    /* ── Fade in ── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .fade-up { animation: fadeUp 0.6s ease forwards; }
+    .fade-up:nth-child(1) { animation-delay: 0.1s; }
+    .fade-up:nth-child(2) { animation-delay: 0.2s; }
+    .fade-up:nth-child(3) { animation-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-logo" href="#">GM / Dev</a>
+      <div class="nav-links">
+        <a href="#proyectos">Proyectos</a>
+        <a href="#skills">Skills</a>
+        <a href="#contacto">Contacto</a>
+        <a class="btn-contact" href="#contacto">Trabajemos juntos →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow glow-1"></div>
+    <div class="hero-glow glow-2"></div>
+    <div class="wrap">
+      <div class="hero-content">
+        <div class="hero-badge">DISPONIBLE PARA PROYECTOS</div>
+        <h1>Desarrollo web &<br /><span>aplicaciones móviles</span></h1>
+        <p>Diseño y desarrollo productos digitales completos — desde el frontend hasta el servidor, apps nativas y despliegue en producción.</p>
+        <div class="hero-ctas">
+          <a href="#proyectos" class="btn-primary">Ver proyectos ↓</a>
+          <a href="#contacto" class="btn-ghost">Contacto</a>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat fade-up">
+          <div class="stat-val" id="stat-projects">4+</div>
+          <div class="stat-label">Proyectos completados</div>
+        </div>
+        <div class="stat fade-up">
+          <div class="stat-val">Full</div>
+          <div class="stat-label">Stack developer</div>
+        </div>
+        <div class="stat fade-up">
+          <div class="stat-val">24/7</div>
+          <div class="stat-label">Apps en producción</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTOS -->
+  <section id="proyectos">
+    <div class="wrap">
+      <span class="section-label">PROYECTOS</span>
+      <h2 class="section-title">Lo que construí</h2>
+      <p class="section-sub">Proyectos reales, en producción, usados por personas reales.</p>
+
+      <div class="projects-grid" id="projects-grid">
+
+        <!-- RemiTax.APP -->
+        <a class="project-card" href="https://remitax.app" target="_blank">
+          <div class="project-preview">
+            <div class="project-preview-placeholder">🚕</div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag tag-blue">Next.js</span>
+              <span class="tag tag-green">Socket.IO</span>
+              <span class="tag tag-purple">Capacitor</span>
+              <span class="tag tag-amber">Mapbox</span>
+            </div>
+            <p class="project-title">RemiTax.APP</p>
+            <p class="project-desc">Plataforma completa de gestión de flotas de taxis y remises. App conductor + pasajero con GPS real, navegación turn-by-turn, liquidaciones automáticas y panel admin.</p>
+            <div class="project-footer">
+              <div class="project-status status-live">
+                <div class="status-dot"></div>
+                <span>En producción</span>
+              </div>
+              <div class="project-links">
+                <a class="project-link" href="https://remitax.app" target="_blank" title="Ver live">↗</a>
+                <a class="project-link" href="https://github.com/elfarodigitalweb/remitax-app" target="_blank" title="GitHub">⌥</a>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- SaaS Dashboard -->
+        <a class="project-card" href="#" target="_blank">
+          <div class="project-preview">
+            <div class="project-preview-placeholder">📊</div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag tag-blue">Next.js</span>
+              <span class="tag tag-purple">TypeScript</span>
+              <span class="tag tag-green">Recharts</span>
+            </div>
+            <p class="project-title">Metricly — SaaS Dashboard</p>
+            <p class="project-desc">Dashboard analítico para SaaS con métricas en tiempo real, gráficos interactivos, gestión de usuarios y reportes exportables.</p>
+            <div class="project-footer">
+              <div class="project-status status-dev">
+                <div class="status-dot"></div>
+                <span>En desarrollo</span>
+              </div>
+              <div class="project-links">
+                <a class="project-link" href="#" title="Ver demo">↗</a>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- SaaS Landing -->
+        <a class="project-card" href="#" target="_blank">
+          <div class="project-preview">
+            <div class="project-preview-placeholder">🚀</div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag tag-blue">Next.js</span>
+              <span class="tag tag-pink">Diseño UI</span>
+              <span class="tag tag-amber">Tailwind</span>
+            </div>
+            <p class="project-title">Nexus — Landing SaaS</p>
+            <p class="project-desc">Landing page profesional para producto SaaS con animaciones, sección de precios, testimonios y formulario de captura de leads.</p>
+            <div class="project-footer">
+              <div class="project-status status-dev">
+                <div class="status-dot"></div>
+                <span>En desarrollo</span>
+              </div>
+              <div class="project-links">
+                <a class="project-link" href="#" title="Ver demo">↗</a>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Task Manager -->
+        <a class="project-card" href="#" target="_blank">
+          <div class="project-preview">
+            <div class="project-preview-placeholder">✅</div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag tag-blue">Next.js</span>
+              <span class="tag tag-green">Prisma</span>
+              <span class="tag tag-purple">NextAuth</span>
+            </div>
+            <p class="project-title">Task Manager</p>
+            <p class="project-desc">Gestor de tareas colaborativo con autenticación, tableros Kanban, prioridades, fechas límite y notificaciones en tiempo real.</p>
+            <div class="project-footer">
+              <div class="project-status status-dev">
+                <div class="status-dot"></div>
+                <span>En desarrollo</span>
+              </div>
+              <div class="project-links">
+                <a class="project-link" href="#" title="Ver demo">↗</a>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card: Agregar proyecto -->
+        <div class="card-add" onclick="document.getElementById('modal-add').style.display='flex'">
+          <div class="card-add-icon">＋</div>
+          <p>Agregar proyecto</p>
+          <span>Cargá un proyecto nuevo o uno online</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" style="background: rgba(255,255,255,0.01); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div class="wrap">
+      <span class="section-label">TECNOLOGÍAS</span>
+      <h2 class="section-title">Stack técnico</h2>
+      <p class="section-sub">Las herramientas que uso día a día para construir productos.</p>
+      <div class="skills-grid">
+        <div class="skill-card"><div class="skill-icon" style="background:rgba(0,0,0,0.3)">⚡</div><div><div class="skill-name">Next.js 14</div><div class="skill-level">App Router · SSR · API Routes</div></div></div>
+        <div class="skill-card"><div class="skill-icon" style="background:rgba(59,130,246,0.15)">🔷</div><div><div class="skill-name">TypeScript</div><div class="skill-level">Tipado estático · Interfaces</div></div></div>
+        <div class="skill-card"><div class="skill-icon" style="background:rgba(16,185,129,0.15)">🔌</div><div><div class="skill-name">Socket.IO</div><div class="skill-level">Tiempo real · WebSockets</div></div></div>
+        <div class="skill-card"><div class="skill-icon" style="background:rgba(139,92,246,0.15)">🗃️</div><div><div class="skill-name">Prisma ORM</div><div class="skill-level">SQLite · PostgreSQL</div></div></div>
+        <div class="skill-card"><div class="skill-icon" style="background:rgba(245,158,11,0.15)">🗺️</div><div><div class="skill-name">Mapbox GL</div><div class="skill-level">GPS · Navegación · Tráfico</div></div></div>
+        <div class="skill-card"><div class="skill-icon" style="background:rgba(239,68,68,0.15)">📱</div><div><div class="skill-name">Capacitor</div><div class="skill-level">Android APK · iOS IPA</div></div></div>
+        <div class="skill-card"><div class="skill-icon" style="background:rgba(99,102,241,0.15)">🔐</div><div><div class="skill-name">NextAuth</div><div class="skill-level">JWT · OAuth · Google</div></div></div>
+        <div class="skill-card"><div class="skill-icon" style="background:rgba(20,184,166,0.15)">🎨</div><div><div class="skill-name">Tailwind CSS</div><div class="skill-level">UI · Responsive · Dark mode</div></div></div>
+        <div class="skill-card"><div class="skill-icon" style="background:rgba(251,191,36,0.15)">📦</div><div><div class="skill-name">PM2 + Nginx</div><div class="skill-level">Deploy · VPS · SSL</div></div></div>
+        <div class="skill-card"><div class="skill-icon" style="background:rgba(88,166,255,0.15)">🐙</div><div><div class="skill-name">Git / GitHub</div><div class="skill-level">CI/CD · Control de versiones</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="wrap">
+      <div class="contact-box">
+        <span class="section-label" style="display:block; margin-bottom:16px;">CONTACTO</span>
+        <h2>¿Tenés un proyecto?</h2>
+        <p>Desarrollo aplicaciones web y móviles completas. Hablemos sobre tu idea.</p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <a class="btn-primary" href="mailto:prensamasgestion@gmail.com">✉️ Escribime</a>
+          <a class="btn-ghost" href="https://github.com/elfarodigitalweb" target="_blank">GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="wrap">
+    <footer>
+      <p>© 2026 Andres Markic · Todos los derechos reservados</p>
+      <div class="footer-links">
+        <a href="#proyectos">Proyectos</a>
+        <a href="#skills">Skills</a>
+        <a href="https://remitax.app" target="_blank">RemiTax.APP</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- MODAL: Agregar proyecto -->
+  <div id="modal-add" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#161D2E; border:1px solid rgba(99,102,241,0.2); border-radius:20px; padding:32px; width:100%; max-width:520px; position:relative;">
+      <button onclick="document.getElementById('modal-add').style.display='none'"
+        style="position:absolute; top:16px; right:16px; background:none; border:none; color:#94A3B8; cursor:pointer; font-size:20px;">✕</button>
+      <h3 style="font-family:'Syne',sans-serif; font-size:22px; font-weight:800; margin-bottom:20px;">Agregar proyecto</h3>
+
+      <form id="form-add" onsubmit="addProject(event)" style="display:flex; flex-direction:column; gap:14px;">
+        <div>
+          <label style="font-size:12px; font-weight:600; color:#94A3B8; display:block; margin-bottom:6px;">Nombre del proyecto *</label>
+          <input id="f-nombre" required placeholder="Mi Proyecto" style="width:100%; padding:10px 12px; border-radius:8px; background:#0A0E17; border:1px solid rgba(255,255,255,0.1); color:white; font-size:14px; outline:none;" />
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:600; color:#94A3B8; display:block; margin-bottom:6px;">Descripción *</label>
+          <textarea id="f-desc" required rows="3" placeholder="Qué hace este proyecto..." style="width:100%; padding:10px 12px; border-radius:8px; background:#0A0E17; border:1px solid rgba(255,255,255,0.1); color:white; font-size:14px; outline:none; resize:vertical;"></textarea>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div>
+            <label style="font-size:12px; font-weight:600; color:#94A3B8; display:block; margin-bottom:6px;">URL del proyecto</label>
+            <input id="f-url" placeholder="https://..." style="width:100%; padding:10px 12px; border-radius:8px; background:#0A0E17; border:1px solid rgba(255,255,255,0.1); color:white; font-size:14px; outline:none;" />
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:600; color:#94A3B8; display:block; margin-bottom:6px;">URL GitHub</label>
+            <input id="f-github" placeholder="https://github.com/..." style="width:100%; padding:10px 12px; border-radius:8px; background:#0A0E17; border:1px solid rgba(255,255,255,0.1); color:white; font-size:14px; outline:none;" />
+          </div>
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:600; color:#94A3B8; display:block; margin-bottom:6px;">Tecnologías (separadas por coma)</label>
+          <input id="f-tags" placeholder="Next.js, TypeScript, PostgreSQL" style="width:100%; padding:10px 12px; border-radius:8px; background:#0A0E17; border:1px solid rgba(255,255,255,0.1); color:white; font-size:14px; outline:none;" />
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div>
+            <label style="font-size:12px; font-weight:600; color:#94A3B8; display:block; margin-bottom:6px;">Emoji del proyecto</label>
+            <input id="f-emoji" placeholder="🌐" maxlength="4" style="width:100%; padding:10px 12px; border-radius:8px; background:#0A0E17; border:1px solid rgba(255,255,255,0.1); color:white; font-size:14px; outline:none; text-align:center;" />
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:600; color:#94A3B8; display:block; margin-bottom:6px;">Estado</label>
+            <select id="f-status" style="width:100%; padding:10px 12px; border-radius:8px; background:#0A0E17; border:1px solid rgba(255,255,255,0.1); color:white; font-size:14px; outline:none;">
+              <option value="live">En producción</option>
+              <option value="dev">En desarrollo</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" style="padding:12px; border-radius:10px; background:var(--accent); color:white; font-size:14px; font-weight:700; border:none; cursor:pointer; margin-top:4px;">
+          Agregar al portfolio →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ── Cargar proyectos guardados de localStorage ──
+    let extraProjects = JSON.parse(localStorage.getItem('portfolio-projects') || '[]');
+    renderExtraProjects();
+
+    function renderExtraProjects() {
+      const grid = document.getElementById('projects-grid');
+      const addCard = grid.lastElementChild;
+      // Quitar proyectos extra anteriores
+      grid.querySelectorAll('.project-card.extra').forEach(el => el.remove());
+      // Insertar antes del card de agregar
+      extraProjects.forEach(p => {
+        const card = buildCard(p);
+        card.classList.add('extra');
+        grid.insertBefore(card, addCard);
+      });
+      // Actualizar contador
+      const total = grid.querySelectorAll('.project-card').length;
+      document.getElementById('stat-projects').textContent = total + '+';
+    }
+
+    function buildCard(p) {
+      const tagColors = ['tag-blue','tag-green','tag-amber','tag-purple','tag-pink','tag-red'];
+      const tags = (p.tags || '').split(',').map((t, i) =>
+        `<span class="tag ${tagColors[i % tagColors.length]}">${t.trim()}</span>`
+      ).join('');
+
+      const statusClass = p.status === 'live' ? 'status-live' : 'status-dev';
+      const statusLabel = p.status === 'live' ? 'En producción' : 'En desarrollo';
+
+      const a = document.createElement('a');
+      a.className = 'project-card';
+      a.href = p.url || '#';
+      if (p.url) a.target = '_blank';
+      a.innerHTML = `
+        <div class="project-preview">
+          <div class="project-preview-placeholder">${p.emoji || '🌐'}</div>
+        </div>
+        <div class="project-info">
+          <div class="project-tags">${tags}</div>
+          <p class="project-title">${p.nombre}</p>
+          <p class="project-desc">${p.desc}</p>
+          <div class="project-footer">
+            <div class="project-status ${statusClass}">
+              <div class="status-dot"></div>
+              <span>${statusLabel}</span>
+            </div>
+            <div class="project-links">
+              ${p.url ? `<a class="project-link" href="${p.url}" target="_blank" onclick="event.stopPropagation()">↗</a>` : ''}
+              ${p.github ? `<a class="project-link" href="${p.github}" target="_blank" onclick="event.stopPropagation()">⌥</a>` : ''}
+              <button class="project-link" onclick="event.preventDefault();event.stopPropagation();deleteProject('${p.id}')" title="Eliminar" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.2);color:#EF4444;">✕</button>
+            </div>
+          </div>
+        </div>`;
+      return a;
+    }
+
+    function addProject(e) {
+      e.preventDefault();
+      const p = {
+        id:     Date.now().toString(),
+        nombre: document.getElementById('f-nombre').value,
+        desc:   document.getElementById('f-desc').value,
+        url:    document.getElementById('f-url').value,
+        github: document.getElementById('f-github').value,
+        tags:   document.getElementById('f-tags').value,
+        emoji:  document.getElementById('f-emoji').value || '🌐',
+        status: document.getElementById('f-status').value,
+      };
+      extraProjects.push(p);
+      localStorage.setItem('portfolio-projects', JSON.stringify(extraProjects));
+      renderExtraProjects();
+      document.getElementById('modal-add').style.display = 'none';
+      document.getElementById('form-add').reset();
+    }
+
+    function deleteProject(id) {
+      if (!confirm('¿Eliminar este proyecto?')) return;
+      extraProjects = extraProjects.filter(p => p.id !== id);
+      localStorage.setItem('portfolio-projects', JSON.stringify(extraProjects));
+      renderExtraProjects();
+    }
+
+    // Cerrar modal al hacer click afuera
+    document.getElementById('modal-add').addEventListener('click', function(e) {
+      if (e.target === this) this.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

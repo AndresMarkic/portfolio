@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import type { Project } from '@/lib/projects';
+import Lightbox from './Lightbox';
 
 const TAG_COLORS = ['rgba(99,102,241,0.15)','rgba(16,185,129,0.12)','rgba(245,158,11,0.12)','rgba(139,92,246,0.12)','rgba(236,72,153,0.12)','rgba(239,68,68,0.12)'];
 const TAG_TEXT   = ['#818CF8','#34D399','#FCD34D','#C4B5FD','#F9A8D4','#FCA5A5'];
@@ -16,6 +17,7 @@ function useScrolled() {
 function ImageCarousel({ imagenes, emoji, nombre }: { imagenes: string[]; emoji: string; nombre: string }) {
   const imgs = imagenes.filter(Boolean);
   const [idx, setIdx] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   if (imgs.length === 0) {
     return (
@@ -26,44 +28,66 @@ function ImageCarousel({ imagenes, emoji, nombre }: { imagenes: string[]; emoji:
   }
 
   return (
-    <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', overflow: 'hidden', background: '#0F172A' }}>
-      {/* Imagen activa */}
-      <img
-        src={imgs[idx]} alt={`${nombre} - ${idx + 1}`}
-        style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.3s' }}
-      />
+    <>
+      <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', overflow: 'hidden', background: '#0F172A', cursor: 'zoom-in' }}
+        onClick={e => { e.preventDefault(); e.stopPropagation(); setLightboxOpen(true); }}
+        title="Click para ampliar">
+        {/* Imagen activa */}
+        <img
+          src={imgs[idx]} alt={`${nombre} - ${idx + 1}`}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }}
+        />
 
-      {/* Flechas (solo si hay más de 1) */}
-      {imgs.length > 1 && (
-        <>
-          <button onClick={e => { e.preventDefault(); setIdx(i => (i - 1 + imgs.length) % imgs.length); }}
-            style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', width: 28, height: 28, borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>
-            ‹
-          </button>
-          <button onClick={e => { e.preventDefault(); setIdx(i => (i + 1) % imgs.length); }}
-            style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', width: 28, height: 28, borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>
-            ›
-          </button>
-        </>
-      )}
-
-      {/* Thumbnails */}
-      {imgs.length > 1 && (
-        <div style={{ position: 'absolute', bottom: 8, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 5 }}>
-          {imgs.map((src, i) => (
-            <button key={i} onClick={e => { e.preventDefault(); setIdx(i); }}
-              style={{ width: i === idx ? 20 : 8, height: 8, borderRadius: 4, border: 'none', cursor: 'pointer', background: i === idx ? 'white' : 'rgba(255,255,255,0.4)', padding: 0, transition: 'all 0.2s' }} />
-          ))}
+        {/* Hint de ampliar (esquina superior izq, solo al hover) */}
+        <div style={{ position: 'absolute', top: 8, left: 8, background: 'rgba(0,0,0,0.55)',
+                      backdropFilter: 'blur(6px)', borderRadius: 8, padding: '4px 9px',
+                      fontSize: 11, color: 'rgba(255,255,255,0.95)', fontWeight: 600,
+                      display: 'flex', alignItems: 'center', gap: 4, pointerEvents: 'none' }}>
+          🔍 Ampliar
         </div>
-      )}
 
-      {/* Contador */}
-      {imgs.length > 1 && (
-        <div style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(0,0,0,0.6)', borderRadius: 6, padding: '2px 8px', fontSize: 11, color: 'rgba(255,255,255,0.8)', fontWeight: 600 }}>
-          {idx + 1}/{imgs.length}
-        </div>
+        {/* Flechas (solo si hay más de 1) */}
+        {imgs.length > 1 && (
+          <>
+            <button onClick={e => { e.preventDefault(); e.stopPropagation(); setIdx(i => (i - 1 + imgs.length) % imgs.length); }}
+              style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', width: 28, height: 28, borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>
+              ‹
+            </button>
+            <button onClick={e => { e.preventDefault(); e.stopPropagation(); setIdx(i => (i + 1) % imgs.length); }}
+              style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', width: 28, height: 28, borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>
+              ›
+            </button>
+          </>
+        )}
+
+        {/* Thumbnails */}
+        {imgs.length > 1 && (
+          <div style={{ position: 'absolute', bottom: 8, left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: 5 }}>
+            {imgs.map((src, i) => (
+              <button key={i} onClick={e => { e.preventDefault(); e.stopPropagation(); setIdx(i); }}
+                style={{ width: i === idx ? 20 : 8, height: 8, borderRadius: 4, border: 'none', cursor: 'pointer', background: i === idx ? 'white' : 'rgba(255,255,255,0.4)', padding: 0, transition: 'all 0.2s' }} />
+            ))}
+          </div>
+        )}
+
+        {/* Contador */}
+        {imgs.length > 1 && (
+          <div style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(0,0,0,0.6)', borderRadius: 6, padding: '2px 8px', fontSize: 11, color: 'rgba(255,255,255,0.8)', fontWeight: 600 }}>
+            {idx + 1}/{imgs.length}
+          </div>
+        )}
+      </div>
+
+      {/* Lightbox */}
+      {lightboxOpen && (
+        <Lightbox
+          imagenes={imgs}
+          idxInicial={idx}
+          nombreProyecto={nombre}
+          onClose={() => setLightboxOpen(false)}
+        />
       )}
-    </div>
+    </>
   );
 }
 

@@ -22,10 +22,10 @@
   },
   {
     "id": "saas-dashboard",
-    "nombre": "Metricly — SaaS Dashboard",
+    "nombre": "Somos Lobby",
     "descripcion": "Dashboard analítico para SaaS con métricas en tiempo real, gráficos interactivos, gestión de usuarios y reportes exportables.",
-    "emoji": "📊",
-    "url": "",
+    "emoji": "🖥️",
+    "url": "https://somoslobby.com",
     "github": "",
     "tags": [
       "Next.js",
@@ -33,11 +33,14 @@
       "Recharts",
       "Tailwind"
     ],
-    "status": "dev",
+    "status": "live",
     "featured": false,
     "orden": 2,
     "imagen": "",
-    "imagenes": [],
+    "imagenes": [
+      "/projects/1779742323275-zbq2x1.png",
+      "/projects/1779742354593-yct9s7.png"
+    ],
     "createdAt": "2026-01-01"
   },
   {
@@ -56,12 +59,17 @@
     "featured": false,
     "orden": 3,
     "imagen": "",
-    "imagenes": [],
+    "imagenes": [
+      "/projects/1779743072297-r27nmy.png",
+      "/projects/1779743092126-8vhg4p.png",
+      "/projects/1779743096534-f4azxy.png",
+      "/projects/1779743100507-hzg4ts.png"
+    ],
     "createdAt": "2026-01-01"
   },
   {
     "id": "task-manager",
-    "nombre": "Task Manager",
+    "nombre": "Task Manager o Gestor de tareas ",
     "descripcion": "Gestor de tareas colaborativo con autenticación, tableros Kanban, prioridades, fechas límite y notificaciones en tiempo real.",
     "emoji": "✅",
     "url": "",
@@ -72,26 +80,51 @@
       "NextAuth",
       "SQLite"
     ],
-    "status": "dev",
+    "status": "archived",
     "featured": false,
     "orden": 4,
     "imagen": "",
-    "imagenes": [],
+    "imagenes": [
+      "/projects/1779742967174-v62346.png",
+      "/projects/1779742974380-sfudx1.png",
+      "/projects/1779742979507-lyvhjw.png"
+    ],
     "createdAt": "2026-01-01"
   },
   {
     "id": "1779146041621",
     "nombre": "eclatbeauty",
     "descripcion": "market place de productos de bellesa y demas ",
+    "emoji": "🌺",
+    "url": "https://eclatbeauty.com.ar",
+    "github": "",
+    "tags": [],
+    "status": "live",
+    "featured": false,
+    "orden": 2,
+    "createdAt": "2026-05-18",
+    "imagen": "",
+    "imagenes": [
+      "/projects/1779741841621-l7w2hy.png",
+      "/projects/1779742063566-ado3ed.png",
+      "/projects/1779742040826-zdtdqy.png"
+    ]
+  },
+  {
+    "id": "1779743294107",
+    "nombre": "Metricly —  Gestión Empresarial",
+    "descripcion": "Diseñé y desarrollé una plataforma moderna de analytics estilo SaaS enfocada en visualización de métricas de negocio en tiempo real. El sistema permite monitorear ingresos, usuarios activos, MRR, tasa de abandono, fuentes de tráfico y actividad reciente desde una interfaz intuitiva, rápida y profesional.\n\nEl proyecto fue pensado con una estética dark mode de nivel enterprise, priorizando experiencia de usuario, claridad visual y escalabilidad para startups o empresas tecnológicas. Incluye gráficos interactivos, paneles estadísticos, navegación lateral optimizada y componentes reutilizables orientados a dashboards financieros y de crecimiento.",
     "emoji": "🌐",
     "url": "",
     "github": "",
     "tags": [],
-    "status": "dev",
+    "status": "archived",
     "featured": false,
-    "orden": 5,
-    "createdAt": "2026-05-18",
+    "orden": 6,
+    "createdAt": "2026-05-25",
     "imagen": "",
-    "imagenes": []
+    "imagenes": [
+      "/projects/1779743287474-lz9vui.png"
+    ]
   }
 ]

@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 interface Props {
   imagenes: string[];
@@ -14,8 +15,12 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
   const [idx, setIdx]     = useState(idxInicial);
   const [zoom, setZoom]   = useState(1);
   const [pan, setPan]     = useState({ x: 0, y: 0 });
+  const [mounted, setMounted] = useState(false);
   const draggingRef       = useRef(false);
   const lastPointerRef    = useRef({ x: 0, y: 0 });
+
+  // Portal: solo después del mount (evita error SSR — document no existe en server)
+  useEffect(() => { setMounted(true); }, []);
 
   const prev = useCallback(() => {
     setZoom(1); setPan({ x: 0, y: 0 });
@@ -95,12 +100,12 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
     }
   }
 
-  if (imagenes.length === 0) return null;
+  if (imagenes.length === 0 || !mounted) return null;
 
-  return (
+  const ui = (
     <div
       style={{
-        position: 'fixed', inset: 0, zIndex: 1000,
+        position: 'fixed', inset: 0, zIndex: 9999,
         background: 'rgba(5,8,15,0.96)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
@@ -274,4 +279,9 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
       `}</style>
     </div>
   );
+
+  // Renderizar en document.body para escapar de cualquier transform/overflow del card.
+  // Necesario porque las tarjetas tienen translateY(-4px) en hover, lo que
+  // atrapa los position:fixed adentro del card por especificación CSS.
+  return createPortal(ui, document.body);
 }

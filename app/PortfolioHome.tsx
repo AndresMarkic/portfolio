@@ -216,7 +216,7 @@ export default function PortfolioHome({ projects }: { projects: Project[] }) {
             <p style={{ color: '#94A3B8', fontSize: 16, marginBottom: 28, maxWidth: 480, margin: '0 auto 28px' }}>Desarrollo aplicaciones web y móviles completas. Hablemos sobre tu idea.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="mailto:prensamasgestion@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '13px 26px', borderRadius: 10, background: '#6366F1', color: 'white', fontSize: 15, fontWeight: 700, textDecoration: 'none' }}>✉️ Escribime</a>
-              <a href="https://github.com/elfarodigitalweb" target="_blank" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '13px 26px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.1)', color: '#94A3B8', fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>GitHub →</a>
+              <a href="https://github.com/AndresMarkic" target="_blank" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '13px 26px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.1)', color: '#94A3B8', fontSize: 15, fontWeight: 600, textDecoration: 'none' }}>GitHub →</a>
             </div>
           </div>
         </div>

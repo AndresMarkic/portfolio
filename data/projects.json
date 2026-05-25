@@ -5,7 +5,7 @@
     "descripcion": "Plataforma completa de gestión de flotas de taxis y remises. App conductor + pasajero con GPS real, navegación turn-by-turn, liquidaciones automáticas y panel admin en tiempo real.",
     "emoji": "🚕",
     "url": "https://remitax.app",
-    "github": "https://github.com/elfarodigitalweb/remitax-app",
+    "github": "https://github.com/AndresMarkic/remitax-app",
     "tags": [
       "Next.js",
       "Socket.IO",

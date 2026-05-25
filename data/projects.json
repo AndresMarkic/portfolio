@@ -126,5 +126,23 @@
     "imagenes": [
       "/projects/1779743287474-lz9vui.png"
     ]
+  },
+  {
+    "id": "1779744424513",
+    "nombre": "Porfolio ",
+    "descripcion": "Subi a mi github el porfolio para poder descargarlo y usarlo  para subir tus proyectos web ",
+    "emoji": "🌐",
+    "url": "",
+    "github": "",
+    "tags": [],
+    "status": "live",
+    "featured": false,
+    "orden": 7,
+    "createdAt": "2026-05-25",
+    "imagen": "",
+    "imagenes": [
+      "/projects/1779744413867-h7187t.png",
+      "/projects/1779744419307-nw71sp.png"
+    ]
   }
 ]

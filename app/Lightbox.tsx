@@ -16,10 +16,12 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
   const [zoom, setZoom]   = useState(1);
   const [pan, setPan]     = useState({ x: 0, y: 0 });
   const [mounted, setMounted] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const draggingRef       = useRef(false);
   const lastPointerRef    = useRef({ x: 0, y: 0 });
 
   // Portal: solo después del mount (evita error SSR — document no existe en server)
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setMounted(true); }, []);
 
   const prev = useCallback(() => {
@@ -68,12 +70,14 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
   }, []);
 
   // Reset zoom al cambiar imagen
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setZoom(1); setPan({ x: 0, y: 0 }); }, [idx]);
 
   // Pan con drag cuando hay zoom
   function onPointerDown(e: React.PointerEvent) {
     if (zoom === 1) return;
     draggingRef.current = true;
+    setDragging(true);
     lastPointerRef.current = { x: e.clientX, y: e.clientY };
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
   }
@@ -86,6 +90,7 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
   }
   function onPointerUp(e: React.PointerEvent) {
     draggingRef.current = false;
+    setDragging(false);
     try { (e.target as HTMLElement).releasePointerCapture(e.pointerId); } catch { /* ignore */ }
   }
 
@@ -177,9 +182,9 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           style={{
-            cursor: zoom > 1 ? (draggingRef.current ? 'grabbing' : 'grab') : 'zoom-in',
+            cursor: zoom > 1 ? (dragging ? 'grabbing' : 'grab') : 'zoom-in',
             transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
-            transition: draggingRef.current ? 'none' : 'transform 0.22s ease-out',
+            transition: dragging ? 'none' : 'transform 0.22s ease-out',
             transformOrigin: 'center center',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             width: '100%', height: '100%',

@@ -137,7 +137,7 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
           <button onClick={() => toggleZoom()}
             title={zoom > 1 ? 'Reducir' : 'Ampliar (clic en la imagen o espacio)'}
             style={{ width: 38, height: 38, borderRadius: 10, border: 'none',
-                     background: zoom > 1 ? 'rgba(99,102,241,0.65)' : 'rgba(255,255,255,0.10)',
+                     background: zoom > 1 ? 'rgba(255,93,56,0.85)' : 'rgba(255,255,255,0.10)',
                      color: '#F1F5F9', cursor: 'pointer', fontSize: 18,
                      display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             {zoom > 1 ? '−' : '+'}
@@ -218,7 +218,7 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
                      fontSize: 26, cursor: 'pointer', display: 'flex',
                      alignItems: 'center', justifyContent: 'center', zIndex: 4,
                      transition: 'all 0.15s' }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.7)'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.08)'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,93,56,0.85)'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.08)'; }}
             onMouseLeave={e => { e.currentTarget.style.background = 'rgba(15,20,30,0.7)'; e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}>
             ‹
           </button>
@@ -236,7 +236,7 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
                      fontSize: 26, cursor: 'pointer', display: 'flex',
                      alignItems: 'center', justifyContent: 'center', zIndex: 4,
                      transition: 'all 0.15s' }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.7)'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.08)'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,93,56,0.85)'; e.currentTarget.style.transform = 'translateY(-50%) scale(1.08)'; }}
             onMouseLeave={e => { e.currentTarget.style.background = 'rgba(15,20,30,0.7)'; e.currentTarget.style.transform = 'translateY(-50%) scale(1)'; }}>
             ›
           </button>
@@ -253,8 +253,8 @@ export default function Lightbox({ imagenes, idxInicial, nombreProyecto, onClose
             <button key={i} onClick={() => setIdx(i)}
               style={{ flexShrink: 0, width: 56, height: 56, borderRadius: 8,
                        overflow: 'hidden', cursor: 'pointer',
-                       border: i === idx ? '2px solid #818CF8' : '2px solid rgba(255,255,255,0.10)',
-                       boxShadow: i === idx ? '0 0 0 3px rgba(99,102,241,0.25)' : 'none',
+                       border: i === idx ? '2px solid #FF5D38' : '2px solid rgba(255,255,255,0.10)',
+                       boxShadow: i === idx ? '0 0 0 3px rgba(255,93,56,0.3)' : 'none',
                        padding: 0, background: 'transparent',
                        opacity: i === idx ? 1 : 0.55,
                        transition: 'all 0.15s' }}

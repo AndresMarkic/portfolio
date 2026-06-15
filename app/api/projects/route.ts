@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth';
 import { getProjects, saveProjects, Project } from '@/lib/projects';
 
 export async function GET() {
-  return NextResponse.json(getProjects());
+  return NextResponse.json(await getProjects());
 }
 
 export async function POST(req: NextRequest) {
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   if (!session) return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
 
   const body = await req.json();
-  const projects = getProjects();
+  const projects = await getProjects();
   const newProject: Project = {
     id:          body.id || Date.now().toString(),
     nombre:      body.nombre,
@@ -29,6 +29,6 @@ export async function POST(req: NextRequest) {
     imagenes:    Array.isArray(body.imagenes) ? body.imagenes.filter(Boolean) : [],
   };
   projects.push(newProject);
-  saveProjects(projects);
+  await saveProjects(projects);
   return NextResponse.json(newProject, { status: 201 });
 }

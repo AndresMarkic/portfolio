@@ -9,7 +9,7 @@ export async function PUT(req: NextRequest, ctx: RouteContext<'/api/projects/[id
 
   const { id } = await ctx.params;
   const body = await req.json();
-  const projects = getProjects();
+  const projects = await getProjects();
   const idx = projects.findIndex(p => p.id === id);
   if (idx === -1) return NextResponse.json({ error: 'No encontrado' }, { status: 404 });
 
@@ -20,7 +20,7 @@ export async function PUT(req: NextRequest, ctx: RouteContext<'/api/projects/[id
     imagenes: Array.isArray(body.imagenes) ? body.imagenes.filter(Boolean) : (projects[idx].imagenes ?? []),
     id,
   };
-  saveProjects(projects);
+  await saveProjects(projects);
   return NextResponse.json(projects[idx]);
 }
 
@@ -29,7 +29,7 @@ export async function DELETE(_: NextRequest, ctx: RouteContext<'/api/projects/[i
   if (!session) return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
 
   const { id } = await ctx.params;
-  const projects = getProjects().filter(p => p.id !== id);
-  saveProjects(projects);
+  const projects = (await getProjects()).filter(p => p.id !== id);
+  await saveProjects(projects);
   return NextResponse.json({ ok: true });
 }

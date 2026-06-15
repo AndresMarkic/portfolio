@@ -1,0 +1,26 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#141416"/>
+      <stop offset="1" stop-color="#0A0A0B"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.7" cy="0.25" r="0.8">
+      <stop stop-color="#FF5D38" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#FF5D38" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- terminal window -->
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="url(#bg)"/>
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="url(#glow)"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="14.5" stroke="#EDEBE3" stroke-opacity="0.14"/>
+
+  <!-- title-bar dots -->
+  <circle cx="15" cy="15" r="2.6" fill="#FF5D38"/>
+  <circle cx="24" cy="15" r="2.6" fill="#EDEBE3" fill-opacity="0.18"/>
+  <circle cx="33" cy="15" r="2.6" fill="#EDEBE3" fill-opacity="0.18"/>
+
+  <!-- prompt: >_ -->
+  <path d="M19 30 L31 39 L19 48" stroke="#FF5D38" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="35" y="44.5" width="14" height="5" rx="2.5" fill="#EDEBE3"/>
+</svg>

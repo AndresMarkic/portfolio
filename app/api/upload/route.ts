@@ -14,7 +14,7 @@ const ALLOWED: Record<string, string> = {
   'image/webp': '.webp',
   'image/gif': '.gif',
 };
-const MAX_BYTES = 6 * 1024 * 1024; // 6 MB
+const MAX_BYTES = 4 * 1024 * 1024; // 4 MB (debajo del tope de 4.5 MB de Vercel)
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
   const ext = ALLOWED[file.type];
   if (!ext) return NextResponse.json({ error: 'Formato no permitido. Usá PNG, JPG, WebP o GIF.' }, { status: 415 });
   if (file.size === 0) return NextResponse.json({ error: 'El archivo está vacío.' }, { status: 400 });
-  if (file.size > MAX_BYTES) return NextResponse.json({ error: 'La imagen supera los 6 MB.' }, { status: 413 });
+  if (file.size > MAX_BYTES) return NextResponse.json({ error: 'La imagen supera los 4 MB. Comprimila o subí una más liviana.' }, { status: 413 });
 
   const buffer = Buffer.from(await file.arrayBuffer());
   // Nombre 100% generado por nosotros → sin path traversal ni nombres maliciosos.
@@ -47,11 +47,14 @@ export async function POST(req: NextRequest) {
         access: 'public',
         contentType: file.type,
         addRandomSuffix: false,
+        allowOverwrite: true,
         token: process.env.BLOB_READ_WRITE_TOKEN,
       });
       return NextResponse.json({ url: blob.url }, { status: 201 });
-    } catch {
-      return NextResponse.json({ error: 'No se pudo subir la imagen a Vercel Blob. Revisá el token BLOB_READ_WRITE_TOKEN.' }, { status: 500 });
+    } catch (e) {
+      // Mostramos el error real (la ruta está protegida por sesión → solo lo ve el admin).
+      const msg = e instanceof Error ? e.message : String(e);
+      return NextResponse.json({ error: `Vercel Blob: ${msg}` }, { status: 500 });
     }
   }
 

@@ -66,7 +66,7 @@ function ImagenesEditor({ value, onChange }: { value: string[]; onChange: (v: st
   async function uploadFile(idx: number, file: File) {
     setErr('');
     if (!file.type.startsWith('image/')) { setErr('Solo se aceptan imágenes (PNG, JPG, WebP, GIF).'); return; }
-    if (file.size > 6 * 1024 * 1024) { setErr('La imagen supera el límite de 6 MB.'); return; }
+    if (file.size > 4 * 1024 * 1024) { setErr('La imagen supera el límite de 4 MB. Comprimila o subí una más liviana.'); return; }
     setUploading(idx);
     try {
       const fd = new FormData();
@@ -133,7 +133,7 @@ function ImagenesEditor({ value, onChange }: { value: string[]; onChange: (v: st
         ))}
       </div>
       {err && <div className="adm-err">{err}</div>}
-      <p className="adm-hint">Subí PNG/JPG/WebP desde tu PC, o pegá una URL. Máx 6 MB cada una.</p>
+      <p className="adm-hint">Subí PNG/JPG/WebP desde tu PC, o pegá una URL. Máx 4 MB cada una.</p>
     </div>
   );
 }

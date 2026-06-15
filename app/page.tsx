@@ -5,7 +5,7 @@ import PortfolioHome from './PortfolioHome';
 // lo que editás en /admin (en vez de quedar congelada en el build).
 export const dynamic = 'force-dynamic';
 
-export default function Home() {
-  const projects = getProjects().sort((a, b) => a.orden - b.orden);
+export default async function Home() {
+  const projects = (await getProjects()).sort((a, b) => a.orden - b.orden);
   return <PortfolioHome projects={projects} />;
 }

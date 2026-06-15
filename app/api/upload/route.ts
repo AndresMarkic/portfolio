@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { put } from '@vercel/blob';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 
@@ -38,18 +39,32 @@ export async function POST(req: NextRequest) {
   const buffer = Buffer.from(await file.arrayBuffer());
   // Nombre 100% generado por nosotros → sin path traversal ni nombres maliciosos.
   const safeName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
-  const dir = path.join(process.cwd(), 'public', 'projects');
 
+  // ── Nube (Vercel Blob) ──────────────────────────────────────────
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      const blob = await put(`projects/${safeName}`, buffer, {
+        access: 'public',
+        contentType: file.type,
+        addRandomSuffix: false,
+        token: process.env.BLOB_READ_WRITE_TOKEN,
+      });
+      return NextResponse.json({ url: blob.url }, { status: 201 });
+    } catch {
+      return NextResponse.json({ error: 'No se pudo subir la imagen a Vercel Blob. Revisá el token BLOB_READ_WRITE_TOKEN.' }, { status: 500 });
+    }
+  }
+
+  // ── Local (filesystem) ──────────────────────────────────────────
   try {
+    const dir = path.join(process.cwd(), 'public', 'projects');
     await mkdir(dir, { recursive: true });
     await writeFile(path.join(dir, safeName), buffer);
+    return NextResponse.json({ url: `/projects/${safeName}` }, { status: 201 });
   } catch {
-    // En hosts con filesystem de solo lectura (p. ej. Vercel) la escritura falla.
     return NextResponse.json(
-      { error: 'No se pudo guardar la imagen en el servidor (filesystem de solo lectura). Subí imágenes corriendo el panel en local.' },
+      { error: 'No se pudo guardar la imagen (filesystem de solo lectura). En Vercel, conectá un Blob store para habilitar las subidas.' },
       { status: 500 },
     );
   }
-
-  return NextResponse.json({ url: `/projects/${safeName}` }, { status: 201 });
 }

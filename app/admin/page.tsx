@@ -17,6 +17,6 @@ export default async function AdminPage() {
   const session = await getServerSession(authOptions);
   if (!session) return <AdminAuth />;
 
-  const projects = getProjects().sort((a, b) => a.orden - b.orden);
+  const projects = (await getProjects()).sort((a, b) => a.orden - b.orden);
   return <AdminDashboard projects={projects} />;
 }

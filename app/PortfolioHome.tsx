@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import type { Project } from '@/lib/projects';
 import Lightbox from './Lightbox';
@@ -185,7 +184,7 @@ export default function PortfolioHome({ projects }: { projects: Project[] }) {
                 <span className="ix">{String(i + 1).padStart(2, '0')}</span>{label}
               </a>
             ))}
-            <Link href="/admin/dashboard" className="btn">Admin →</Link>
+            <a href="#contacto" className="btn">Contactar →</a>
           </div>
         </div>
       </nav>
@@ -311,7 +310,6 @@ export default function PortfolioHome({ projects }: { projects: Project[] }) {
               <a href="#trabajo">Trabajo</a>
               <a href="#stack">Stack</a>
               <a href="https://github.com/AndresMarkic" target="_blank" rel="noopener noreferrer">GitHub</a>
-              <Link href="/admin/dashboard">Admin</Link>
             </div>
           </footer>
         </div>
